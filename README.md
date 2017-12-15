@@ -9,11 +9,11 @@
 The goal of this project is to recieve inputs from the ultrasonic sensors, and eventually the front sensor.
 
 ## Project Tasks
-1. Test the output and input voltages from the Arduino Nano connected to the SS
-   - This voltage should be 5 volts
-2. Test the output and input voltages from the Arduino Nano connected to the SS through the voltage divider
-   - This is to make sure the voltage divider can safely divide the 5 V down to the 3.3 V that the Raspberry Pi uses
-   - This set can be skipped the input / output voltage is found to be 3.3 V
+~1. Test the output and input voltages from the Arduino Nano connected to the SS~
+   ~- This voltage should be 5 volts~
+~2. Test the output and input voltages from the Arduino Nano connected to the SS through the voltage divider~
+   ~- This is to make sure the voltage divider can safely divide the 5 V down to the 3.3 V that the Raspberry Pi uses~
+   ~- This set can be skipped the input / output voltage is found to be 3.3 V~
 3. Create a program to get a distance measurement from the SS
    - This program may be in C or Python
    - This program can display the information on the terminal or as a text file
@@ -29,4 +29,5 @@ The goal of this project is to recieve inputs from the ultrasonic sensors, and e
 - This website has great information on how the ultrasonic sensor works
 - To program the Arduino you will need the [Arduino IDE](https://www.arduino.cc/en/Main/Software#download)
 - Another good source I have found is <https://www.raspberrypi-spy.co.uk/2016/10/waterproof-ultrasonic-distance-measuring-module/>
+    - The Python scripts come from the above website
 

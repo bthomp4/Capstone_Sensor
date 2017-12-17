@@ -110,13 +110,18 @@ speedSound = 13500 # in/s
 print("Ultrasonic Measurement")
 
 # Set pins as output and input
-GPIO.setup(GPIO_TRIGGER,GPIO.OUT)  # Trigger
-GPIO.setup(GPIO_ECHO,GPIO.IN)      # Echo
-GPIO.setup(GPIO_LED1,GPIO.OUT)     # LED 1
+GPIO.setup(GPIO_TRIGGER1,GPIO.OUT)  # Trigger 1
+GPIO.setup(GPIO_ECHO1,GPIO.IN)      # Echo 1
+GPIO.setup(GPIO_LED1,GPIO.OUT)      # LED 1
+GPIO.setup(GPIO_LED2,GPIO.OUT)      # LED 2
+GPIO.setup(GPIO_TRIGGER2,GPIO.OUT)  # Tigger Trigger 2
+GPIO.setup(GPIO_ECHO2,GPIO.IN)      # ECHO 2
 
 # Set trigger to False (Low)
-GPIO.output(GPIO_TRIGGER, False)
+GPIO.output(GPIO_TRIGGER1, False)
 GPIO.output(GPIO_LED1, False)
+GPIO.output(GPIO_TRIGGER2, False)
+GPIO.output(GPIO_LED2, False)
 
 # Allow module to settle
 time.sleep(0.5)

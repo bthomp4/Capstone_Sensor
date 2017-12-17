@@ -25,17 +25,17 @@ GPIO.setmode(GPIO.BCM)
 # Define GPIO to use on Pi
 GPIO_TRIGGER = 23
 GPIO_ECHO    = 24
+GPIO_LED1    = 17
 
-# Speed of sound in cm/s at temperature
-temperature = 20
-speedSound = 33100 + (0.6*temperature)
+# Speed of sound in in/s at temperature
+speedSound = 13500  # in/s
 
 print("Ultrasonic Measurement")
-print("Speed of sound is",speedSound/100,"m/s at ",temperature,"deg")
 
 # Set pins as output and input
 GPIO.setup(GPIO_TRIGGER,GPIO.OUT)  # Trigger
 GPIO.setup(GPIO_ECHO,GPIO.IN)      # Echo
+GPIO.setup(GPIO_LED1,GPIO.OUT)     # Led 1
 
 # Set trigger to False (Low)
 GPIO.output(GPIO_TRIGGER, False)
@@ -60,13 +60,20 @@ while GPIO.input(GPIO_ECHO)==1:
 elapsed = stop-start
 
 # Distance pulse travelled in that time is time
-# multiplied by the speed of sound (cm/s)
+# multiplied by the speed of sound (in/s)
 distance = elapsed * speedSound
 
 # That was the distance there and back so halve the value
-distance = distance / 2
+distance = distance / 2 # in inches
 
-print("Distance : {0:5.1f}".format(distance))
+# For now printing distance. In final product will not print distance
+print("Distance : %d inches" % distance)
+
+# Only using one LED for now will use more in the future
+# This will turn on the first LED if there is something closer
+# Than four feet to the sensor
+if distance < 48:
+    GPIO.output(GPIO_LED1,True)
 
 # Reset GPIO settings
 GPIO.cleanup()

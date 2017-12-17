@@ -24,18 +24,18 @@ import RPi.GPIO as GPIO
 # -----------------------
 # Define some functions
 # -----------------------
-def measure():
+def measure1():
   # This function measures a distance
-  GPIO.output(GPIO_TRIGGER, True)
+  GPIO.output(GPIO_TRIGGER1, True)
   # Wait 10us
   time.sleep(0.00001)
-  GPIO.output(GPIO_TRIGGER, False)
+  GPIO.output(GPIO_TRIGGER1, False)
   start = time.time()
   
-  while GPIO.input(GPIO_ECHO)==0:
+  while GPIO.input(GPIO_ECHO1)==0:
     start = time.time()
 
-  while GPIO.input(GPIO_ECHO)==1:
+  while GPIO.input(GPIO_ECHO1)==1:
     stop = time.time()
 
   elapsed = stop-start
@@ -43,15 +43,47 @@ def measure():
 
   return distance
 
-def measure_average():
+def measure_average1():
   # This function takes 3 measurements and
   # returns the average.
 
-  distance1=measure()
+  distance1=measure1()
   time.sleep(0.1)
-  distance2=measure()
+  distance2=measure1()
   time.sleep(0.1)
-  distance3=measure()
+  distance3=measure1()
+  distance = distance1 + distance2 + distance3
+  distance = distance / 3
+  return distance
+  
+def measure2():
+  # This function measures a distance
+  GPIO.output(GPIO_TRIGGER2, True)
+  # Wait 10us
+  time.sleep(0.00001)
+  GPIO.output(GPIO_TRIGGER2, False)
+  start = time.time()
+  
+  while GPIO.input(GPIO_ECHO2)==0:
+    start = time.time()
+
+  while GPIO.input(GPIO_ECHO2)==1:
+    stop = time.time()
+
+  elapsed = stop-start
+  distance = (elapsed * speedSound)/2
+
+  return distance
+
+def measure_average2():
+  # This function takes 3 measurements and
+  # returns the average.
+
+  distance1=measure2()
+  time.sleep(0.1)
+  distance2=measure2()
+  time.sleep(0.1)
+  distance3=measure2()
   distance = distance1 + distance2 + distance3
   distance = distance / 3
   return distance
@@ -65,9 +97,12 @@ def measure_average():
 GPIO.setmode(GPIO.BCM)
 
 # Define GPIO to use on Pi
-GPIO_TRIGGER = 23
-GPIO_ECHO    = 24
-GPIO_LED1    = 17
+GPIO_TRIGGER1 = 23
+GPIO_ECHO1    = 24
+GPIO_LED1     = 17
+GPIO_LED2     = 27
+GPIO_TRIGGER2 = 5
+GPIO_ECHO2    = 6
 
 # Speed of sound in in/s at temperature
 speedSound = 13500 # in/s
@@ -93,13 +128,23 @@ time.sleep(0.5)
 # messages.
 try:
   while True:
-    distance = measure_average()
-	# printing distance for know will eventually delete this
-    print("Distance : %d inches" %distance)
-	# if there is something less than 4 ft away from sensor
-	if distance > 48:
-	    # Turn on led 1
-	    GPIO.output(GPIO_LED1, True)
+    distance = measure_average1()
+    # printing distance for know will eventually delete this
+    print("Distance Sensor 1: %d inches" %distance)
+    # if there is something less than 4 ft away from sensor
+    if distance <= 48:
+        # Turn on led 1
+        GPIO.output(GPIO_LED1, True)
+    else:
+        GPIO.output(GPIO_LED1, False)
+    
+    distance = measure_average2()
+    print("Distance Sensor 1: %d inches" % distance)
+    if distance <= 48:
+        GPIO.output(GPIO_LED2, True)
+    else:
+        GPIO.output(GPIO_LED2, False)
+    
     time.sleep(1)
 
 except KeyboardInterrupt:

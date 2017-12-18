@@ -144,13 +144,13 @@ try:
         GPIO.output(GPIO_LED1, False)
     
     distance = measure_average2()
-    print("Distance Sensor 1: %d inches" % distance)
+    print("Distance Sensor 2: %d inches" % distance)
     if distance <= 48:
         GPIO.output(GPIO_LED2, True)
     else:
         GPIO.output(GPIO_LED2, False)
     
-    time.sleep(1)
+    time.sleep(0.5)
 
 except KeyboardInterrupt:
   # User pressed CTRL-C

@@ -18,62 +18,64 @@ from __future__ import print_function
 import time
 import RPi.GPIO as GPIO
 
-# Use BCM GPIO references
-# instead of physical pin numbers
-GPIO.setmode(GPIO.BCM)
+try:
+    # Use BCM GPIO references
+    # instead of physical pin numbers
+    GPIO.setmode(GPIO.BCM)
 
-# Define GPIO to use on Pi
-GPIO_TRIGGER = 23
-GPIO_ECHO    = 24
-GPIO_LED1    = 17
+    # Define GPIO to use on Pi
+    GPIO_TRIGGER = 23
+    GPIO_ECHO    = 24
+    GPIO_LED1    = 17
 
-# Speed of sound in in/s at temperature
-speedSound = 13500  # in/s
+    # Speed of sound in in/s at temperature
+    speedSound = 13500  # in/s
 
-print("Ultrasonic Measurement")
+    print("Ultrasonic Measurement")
 
-# Set pins as output and input
-GPIO.setup(GPIO_TRIGGER,GPIO.OUT)  # Trigger
-GPIO.setup(GPIO_ECHO,GPIO.IN)      # Echo
-GPIO.setup(GPIO_LED1,GPIO.OUT)     # Led 1
+    # Set pins as output and input
+    GPIO.setup(GPIO_TRIGGER,GPIO.OUT)  # Trigger
+    GPIO.setup(GPIO_ECHO,GPIO.IN)      # Echo
+    GPIO.setup(GPIO_LED1,GPIO.OUT)     # Led 1
 
-# Set trigger to False (Low)
-GPIO.output(GPIO_TRIGGER, False)
+    # Set trigger to False (Low)
+    GPIO.output(GPIO_TRIGGER, False)
+    # Allow module to settle
+    time.sleep(0.5)
+    # Send 10us pulse to trigger
+    GPIO.output(GPIO_TRIGGER, True)
+    # Wait 10us
+    time.sleep(0.00001)
+    GPIO.output(GPIO_TRIGGER, False)
+    start = time.time()
 
-# Allow module to settle
-time.sleep(0.5)
+    while GPIO.input(GPIO_ECHO)==0:
+        start = time.time()
 
-# Send 10us pulse to trigger
-GPIO.output(GPIO_TRIGGER, True)
-# Wait 10us
-time.sleep(0.00001)
-GPIO.output(GPIO_TRIGGER, False)
-start = time.time()
+    while GPIO.input(GPIO_ECHO)==1:
+        stop = time.time()
 
-while GPIO.input(GPIO_ECHO)==0:
-  start = time.time()
+    # Calculate pulse length
+    elapsed = stop-start
 
-while GPIO.input(GPIO_ECHO)==1:
-  stop = time.time()
+    # Distance pulse travelled in that time is time
+    # multiplied by the speed of sound (in/s)
+    distance = elapsed * speedSound
 
-# Calculate pulse length
-elapsed = stop-start
+    # That was the distance there and back so halve the value
+    distance = distance / 2 # in inches
 
-# Distance pulse travelled in that time is time
-# multiplied by the speed of sound (in/s)
-distance = elapsed * speedSound
+    # For now printing distance. In final product will not print distance
+    print("Distance : %d inches" % distance)
 
-# That was the distance there and back so halve the value
-distance = distance / 2 # in inches
+    # Only using one LED for now will use more in the future
+    # This will turn on the first LED if there is something closer
+    # Than four feet to the sensor
+    if distance < 48:
+        GPIO.output(GPIO_LED1,True)
+    GPIO.cleanup()
 
-# For now printing distance. In final product will not print distance
-print("Distance : %d inches" % distance)
+except KeyboardInterrupt:
+    # Reset GPIO settings
+    GPIO.cleanup()
 
-# Only using one LED for now will use more in the future
-# This will turn on the first LED if there is something closer
-# Than four feet to the sensor
-if distance < 48:
-    GPIO.output(GPIO_LED1,True)
-
-# Reset GPIO settings
-GPIO.cleanup()

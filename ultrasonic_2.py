@@ -132,24 +132,27 @@ time.sleep(0.5)
 # the user seeing lots of unnecessary error
 # messages.
 try:
+  print("Distance Sensor 1\tDistance Sensor 2") 
   while True:
-    distance = measure_average1()
+    distance1 = measure_average1()
     # printing distance for know will eventually delete this
-    print("Distance Sensor 1: %d inches" %distance)
+    # print("Distance Sensor 1: %d inches" %distance)
     # if there is something less than 4 ft away from sensor
-    if distance <= 48:
+    if distance1 <= 48:
         # Turn on led 1
         GPIO.output(GPIO_LED1, True)
     else:
         GPIO.output(GPIO_LED1, False)
     
-    distance = measure_average2()
-    print("Distance Sensor 2: %d inches" % distance)
-    if distance <= 48:
+    distance2 = measure_average2()
+ 
+    # print("Distance Sensor 2: %d inches" % distance)
+    if distance2 <= 48:
         GPIO.output(GPIO_LED2, True)
     else:
         GPIO.output(GPIO_LED2, False)
     
+    print(int(distance1), "inches\t\t", int(distance2), "inches")
     time.sleep(0.5)
 
 except KeyboardInterrupt:

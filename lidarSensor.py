@@ -39,8 +39,11 @@ def measure():
     while GPIO.input(GPIO_ECHO) == 1:
         stop = time.time()
 
-    elapsed = stop - start
-    distance = (elapsed * speedSound) / 2
+    stop = time.time()
+
+    elapsed = stop - start # every 10 microseconds = 1 cm
+    distance = elapsed * (10  ** 5) # in cm
+    distance = distance  * 0.0328084 # in feet
 
     return distance
 
@@ -49,13 +52,33 @@ def measure_average():
     # This function takes 3 measurements and
     # returns the average.
 
+    # No for loop because I want to make Ben angry
+
     distance1 = measure()
-    time.sleep(0.1)
+    time.sleep(0.005)
     distance2 = measure()
-    time.sleep(0.1)
+    time.sleep(0.005)
     distance3 = measure()
-    distance = distance1 + distance2 + distance3
-    distance = distance / 3
+    time.sleep(0.005)
+    distance4 = measure()
+    time.sleep(0.005)
+    distance5 = measure()
+    time.sleep(0.005)
+    distance6 = measure()
+    time.sleep(0.005)
+    distance7 = measure()
+    time.sleep(0.005)
+    distance8 = measure()
+    time.sleep(0.005)
+    distance9 = measure()
+    time.sleep(0.005)
+    distance10 = measure()
+    time.sleep(0.005)
+    distance11 = measure()
+    time.sleep(0.005)
+    distance12 = measure()
+    distance = distance1 + distance2 + distance3 + distance4 + distance5 + distance6 + distance7 + distance8 + distance9 + distance10 + distance11 + distance12
+    distance = distance / 12
     return distance
 
 
@@ -72,7 +95,7 @@ GPIO_TRIGGER = 23
 GPIO_ECHO = 20
 
 # Speed of sound in in/s at temperature
-speedSound = 13500  # in/s
+speedLight = (9.8 * (10 ** 8))  # ft/s
 
 print("Ultrasonic Measurement")
 
@@ -81,8 +104,8 @@ GPIO.setup(GPIO_TRIGGER, GPIO.OUT)  # Trigger 1
 GPIO.setup(GPIO_ECHO, GPIO.IN)  # Echo 1
 
 # Set trigger to False (Low)
-GPIO.output(GPIO_TRIGGER, False)
-GPIO.output(GPIO_LED, False)
+GPIO.output(GPIO_TRIGGER, True)
+#GPIO.output(GPIO_LED, False)
 
 # Allow module to settle
 time.sleep(0.5)
@@ -95,9 +118,13 @@ time.sleep(0.5)
 try:
     print("Lidar Distance:")
     while True:
-        distance = measure_average()
+        distance1 = measure_average()
+        distance2 = measure_average()
+        distance3 = measure_average()
+        distance4 = measure_average()
+        distance = (distance1 + distance2 + distance3 + distance4) / 4
         # printing distance for know will eventually delete this
-        print("Distance: %d inches" %distance)
+        print("Distance: %d feet" %distance)
         # if there is something less than 4 ft away from sensor
         #if distance1 <= 48:
         #    # Turn on led 1
@@ -105,7 +132,7 @@ try:
         #else:
         #    GPIO.output(GPIO_LED1, False)
 
-        time.sleep(0.5)
+        time.sleep(.5)
 
 except KeyboardInterrupt:
     # User pressed CTRL-C

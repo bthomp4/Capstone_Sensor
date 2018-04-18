@@ -55,27 +55,27 @@ def measure_average():
     # No for loop because I want to make Ben angry
 
     distance1 = measure()
-    time.sleep(0.005)
+    time.sleep(0.05)
     distance2 = measure()
-    time.sleep(0.005)
+    time.sleep(0.05)
     distance3 = measure()
-    time.sleep(0.005)
+    time.sleep(0.05)
     distance4 = measure()
-    time.sleep(0.005)
+    time.sleep(0.05)
     distance5 = measure()
-    time.sleep(0.005)
+    time.sleep(0.05)
     distance6 = measure()
-    time.sleep(0.005)
+    time.sleep(0.05)
     distance7 = measure()
-    time.sleep(0.005)
+    time.sleep(0.05)
     distance8 = measure()
-    time.sleep(0.005)
+    time.sleep(0.05)
     distance9 = measure()
-    time.sleep(0.005)
+    time.sleep(0.05)
     distance10 = measure()
-    time.sleep(0.005)
+    time.sleep(0.05)
     distance11 = measure()
-    time.sleep(0.005)
+    time.sleep(0.05)
     distance12 = measure()
     distance = distance1 + distance2 + distance3 + distance4 + distance5 + distance6 + distance7 + distance8 + distance9 + distance10 + distance11 + distance12
     distance = distance / 12
@@ -103,7 +103,7 @@ print("Ultrasonic Measurement")
 GPIO.setup(GPIO_TRIGGER, GPIO.OUT)  # Trigger 1
 GPIO.setup(GPIO_ECHO, GPIO.IN)  # Echo 1
 
-# Set trigger to False (Low)
+# Set trigger to True (high)
 GPIO.output(GPIO_TRIGGER, True)
 #GPIO.output(GPIO_LED, False)
 
@@ -118,11 +118,7 @@ time.sleep(0.5)
 try:
     print("Lidar Distance:")
     while True:
-        distance1 = measure_average()
-        distance2 = measure_average()
-        distance3 = measure_average()
-        distance4 = measure_average()
-        distance = (distance1 + distance2 + distance3 + distance4) / 4
+        distance = measure_average()
         # printing distance for know will eventually delete this
         print("Distance: %d feet" %distance)
         # if there is something less than 4 ft away from sensor
@@ -132,7 +128,7 @@ try:
         #else:
         #    GPIO.output(GPIO_LED1, False)
 
-        time.sleep(.5)
+        time.sleep(1)
 
 except KeyboardInterrupt:
     # User pressed CTRL-C

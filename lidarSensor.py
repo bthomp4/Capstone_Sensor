@@ -52,9 +52,10 @@ def measure_average():
     # This function takes 3 measurements and
     # returns the average.
     n = 50
+    sum_measure = 0
     for i in range(0,n):
-        sum_measurement = sum_measure + measure()
-        time.sleep(0.05)
+        sum_measure = sum_measure + measure()
+        #time.sleep(0.05)
     return sum_measure/n
     # No for loop because I want to make Ben angry
 #    distance1 = measure()
@@ -131,7 +132,7 @@ try:
         #else:
         #    GPIO.output(GPIO_LED1, False)
 
-        time.sleep(1)
+        time.sleep(0.5)
 
 except KeyboardInterrupt:
     # User pressed CTRL-C

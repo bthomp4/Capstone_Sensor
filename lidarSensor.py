@@ -51,35 +51,38 @@ def measure():
 def measure_average():
     # This function takes 3 measurements and
     # returns the average.
-
+    n = 50
+    for i in range(0,n):
+        sum_measurement = sum_measure + measure()
+        time.sleep(0.05)
+    return sum_measure/n
     # No for loop because I want to make Ben angry
-
-    distance1 = measure()
-    time.sleep(0.05)
-    distance2 = measure()
-    time.sleep(0.05)
-    distance3 = measure()
-    time.sleep(0.05)
-    distance4 = measure()
-    time.sleep(0.05)
-    distance5 = measure()
-    time.sleep(0.05)
-    distance6 = measure()
-    time.sleep(0.05)
-    distance7 = measure()
-    time.sleep(0.05)
-    distance8 = measure()
-    time.sleep(0.05)
-    distance9 = measure()
-    time.sleep(0.05)
-    distance10 = measure()
-    time.sleep(0.05)
-    distance11 = measure()
-    time.sleep(0.05)
-    distance12 = measure()
-    distance = distance1 + distance2 + distance3 + distance4 + distance5 + distance6 + distance7 + distance8 + distance9 + distance10 + distance11 + distance12
-    distance = distance / 12
-    return distance
+#    distance1 = measure()
+#    time.sleep(0.05)
+#    distance2 = measure()
+#    time.sleep(0.05)
+#    distance3 = measure()
+#    time.sleep(0.05)
+#    distance4 = measure()
+#    time.sleep(0.05)
+#    distance5 = measure()
+#    time.sleep(0.05)
+#    distance6 = measure()
+#    time.sleep(0.05)
+#    distance7 = measure()
+#    time.sleep(0.05)
+#    distance8 = measure()
+#    time.sleep(0.05)
+#    distance9 = measure()
+#    time.sleep(0.05)
+#    distance10 = measure()
+#    time.sleep(0.05)
+#    distance11 = measure()
+#    time.sleep(0.05)
+#    distance12 = measure()
+#    distance = distance1 + distance2 + distance3 + distance4 + distance5 + distance6 + distance7 + distance8 + distance9 + distance10 + distance11 + distance12
+#    distance = distance / 12
+#    return distance
 
 
 # -----------------------

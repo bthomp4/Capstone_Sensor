@@ -29,7 +29,7 @@ def measure():
     # This function measures a distance
     GPIO.output(GPIO_TRIGGER, True)
     # Wait 10us
-    time.sleep(0.00001)
+    time.sleep(0.00001) # this is needed
     GPIO.output(GPIO_TRIGGER, False)
     start = time.time()
 
@@ -51,7 +51,7 @@ def measure():
 def measure_average():
     # This function takes 3 measurements and
     # returns the average.
-    n = 50
+    n = 3 # why
     sum_measure = 0
     for i in range(0,n):
         sum_measure = sum_measure + measure()
@@ -132,7 +132,7 @@ try:
         #else:
         #    GPIO.output(GPIO_LED1, False)
 
-        time.sleep(0.5)
+        time.sleep(0.5)  #not needed
 
 except KeyboardInterrupt:
     # User pressed CTRL-C
